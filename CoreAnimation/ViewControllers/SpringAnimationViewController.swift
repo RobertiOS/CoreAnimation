@@ -32,7 +32,7 @@ class SpringAnimationViewController: UIViewController {
     //2
     
     private func startSpringAnimation() {
-        let springAnimation = CASpringAnimation(keyPath: "position.y")
+        let springAnimation = CASpringAnimation(keyPath: .positionY)
         springAnimation.fromValue = view.center.y - 10
         springAnimation.toValue = view.center.y
         springAnimation.duration = 2
@@ -53,4 +53,8 @@ class SpringAnimationViewController: UIViewController {
         view.addSubview(button)
     }
 
+}
+
+#Preview {
+    SpringAnimationViewController()
 }

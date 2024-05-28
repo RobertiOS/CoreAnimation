@@ -19,7 +19,7 @@ class BasicAnimationViewController: UIViewController {
     
     //2
     private func startBasicAnimation() {
-        let basicAnimation = CABasicAnimation(keyPath: "position.x")
+        let basicAnimation = CABasicAnimation(keyPath: .positionX)
         basicAnimation.fromValue = view.frame.width
         basicAnimation.toValue = 50
         basicAnimation.duration = 1
@@ -45,3 +45,6 @@ class BasicAnimationViewController: UIViewController {
     
 }
 
+#Preview {
+    BasicAnimationViewController()
+}

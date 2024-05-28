@@ -33,23 +33,19 @@ class KeyframeAnimationViewController: UIViewController {
         return textField
     }()
     
-    //2
+    //1
     
     private func startKeyframeAnimation() {
-        let keyframeAnimation = CAKeyframeAnimation()
-        keyframeAnimation.duration = 0.5
-        keyframeAnimation.keyPath = "position.x"
+        let keyframeAnimation = CAKeyframeAnimation(keyPath: "position.x")
+        keyframeAnimation.duration = 0.25
+        keyframeAnimation.keyPath = CABasicAnimation.AnimationKeyPath.positionX.rawValue
         keyframeAnimation.values = [0, 10, -10, 10, 0]
         keyframeAnimation.keyTimes = [0, 0.16, 0.5, 0.83, 1]
-        keyframeAnimation.duration = 0.5
-        
         keyframeAnimation.isAdditive = true
         textField.layer.add(keyframeAnimation, forKey: "basic")
         textField.layer.position = .init(x: view.center.x, y: view.center.y)
     }
     
-    
-    //3
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Keyframe animation"
@@ -80,5 +76,8 @@ class KeyframeAnimationViewController: UIViewController {
             
         ])
     }
+}
 
+#Preview {
+    KeyframeAnimationViewController()
 }

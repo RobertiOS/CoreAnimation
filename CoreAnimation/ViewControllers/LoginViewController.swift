@@ -9,12 +9,15 @@ import UIKit
 
 class LoginViewController: UIViewController {
     
+    // MARK: - Constants
+    
     struct Constants {
-        static let primaryColor = UIColor(red: 104/255, green: 81/255, blue: 164/255, alpha: 1)
+        static let primaryColor = UIColor.orange
         static let expandedHeight: CGFloat = 350
-        static let colapsedHeight: CGFloat = 250
+        static let colapsedHeight: CGFloat = 280
     }
     
+    // MARK: - Views
     
     private let containerView: UIView = {
         let view = UIView()
@@ -72,45 +75,46 @@ class LoginViewController: UIViewController {
         configuration.cornerStyle = .capsule
         configuration.title = "Log in"
         button.configuration = configuration
-        button.alpha = 0
         button.transform = CGAffineTransform(scaleX: 0, y: 0)
         return button
     }()
     
-    private let signUpButton: UIButton = {
+    private lazy var signUpButton: UIButton = {
         var configuration =  UIButton.Configuration.filled()
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        configuration.baseBackgroundColor = Constants.primaryColor
+        configuration.baseBackgroundColor = .clear
+        configuration.baseForegroundColor = Constants.primaryColor
         configuration.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 20, bottom: 8, trailing: 20)
         configuration.cornerStyle = .capsule
         configuration.title = "Sign up"
         button.configuration = configuration
-        button.alpha = 0
         button.transform = CGAffineTransform(scaleX: 0, y: 0)
+        
+        button.addAction(UIAction(handler: { [weak self] _ in
+            self?.expandContainerAnimation()
+            self?.animateConfirmPassword()
+        }), for: .touchUpInside)
         return button
     }()
     
-    lazy var userTextFieldTrailingConstraint = userTextField.trailingAnchor.constraint(
-        equalTo: containerView.trailingAnchor,
-        constant: -20
+    
+    // MARK: - constraints
+    
+    private lazy var containerHeightConstraint = containerView.heightAnchor.constraint(
+        equalToConstant: Constants.colapsedHeight
+    )
+    private lazy var confirmPasswordTrailingConstraint = self.confirmPasswordTextfield.trailingAnchor.constraint(
+        equalTo: self.containerView.trailingAnchor,
+        constant: -500
     )
     
-    private var containerHeightConstraint: NSLayoutConstraint?
+    // MARK: - Life cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = Constants.primaryColor
-        loginButton.addAction(UIAction(handler: { _ in
-
-        }), for: .touchUpInside)
-        
-        signUpButton.addAction(UIAction(handler: { _ in
-            self.expandContainerAnimation()
-            self.animateConfirmPassword()
-        }), for: .touchUpInside)
-        
         constructViewHierarchy()
         constructSubviewHierarchy()
         constructSubviewConstraints()
@@ -135,15 +139,10 @@ class LoginViewController: UIViewController {
     }
     
     private func constructSubviewConstraints() {
-        
-        containerHeightConstraint = containerView.heightAnchor.constraint(equalToConstant: Constants.colapsedHeight)
-        
         NSLayoutConstraint.activate([
-//            containerView.heightAnchor.constraint(equalToConstant: 350),
-            containerHeightConstraint!,
+            containerHeightConstraint,
             containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
             containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
-//            containerView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             containerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 200),
             
             userTextField.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 20),
@@ -156,10 +155,10 @@ class LoginViewController: UIViewController {
             passwordTextfield.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
             passwordTextfield.heightAnchor.constraint(equalToConstant: 50),
             
-            signUpButton.bottomAnchor.constraint(equalTo: loginButton.topAnchor, constant: -10),
+            signUpButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -20),
             signUpButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             
-            loginButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -20),
+            loginButton.bottomAnchor.constraint(equalTo: signUpButton.topAnchor, constant: -10),
             loginButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
         ])
     }
@@ -183,14 +182,14 @@ class LoginViewController: UIViewController {
         animationGroup.duration = 2.0
         
         userTextField.frame.size = .init(width: 50, height: 50)
-        passwordTextfield.frame.size = .init(width: 50, height: 50) // Ajusta el espacio según tus márgenes
+        passwordTextfield.frame.size = .init(width: 50, height: 50)
         
-        let animation = CABasicAnimation(keyPath: "bounds.size.width")
-        animation.fromValue = 50  // Ancho inicial del textfield (comenzando desde cero)
-        animation.toValue = 200  // Ancho final basado en el contenedor, restando los márgenes
+        let animation = CABasicAnimation(keyPath: .boundsSizeWidth)
+        animation.fromValue = 50
+        animation.toValue = 200
         animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
         
-        let opacityAnimation = CABasicAnimation(keyPath: "opacity")
+        let opacityAnimation = CABasicAnimation(keyPath: .opacity)
         opacityAnimation.duration = 2
         opacityAnimation.fromValue = 0.0
         opacityAnimation.toValue = 1.0
@@ -245,14 +244,14 @@ class LoginViewController: UIViewController {
     }
     
     private func expandContainerAnimation() {
-        let value = self.containerHeightConstraint?.constant == Constants.colapsedHeight ? Constants.expandedHeight : Constants.colapsedHeight
+        let value = self.containerHeightConstraint.constant == Constants.colapsedHeight ? Constants.expandedHeight : Constants.colapsedHeight
         
         let collapsed = value == Constants.colapsedHeight
         let delay: TimeInterval = collapsed ? 1 : 0
         
         UIView.animate(withDuration: 1, delay: delay, usingSpringWithDamping: 0.4, initialSpringVelocity: 10, options: .curveEaseInOut, animations: {
             
-            self.containerHeightConstraint?.constant = value
+            self.containerHeightConstraint.constant = value
             self.view.layoutIfNeeded()
         }, completion: { (completed) in
             
@@ -260,7 +259,6 @@ class LoginViewController: UIViewController {
         
     }
     
-    var confirmPasswordTrailing: NSLayoutConstraint?
     
     private func animateConfirmPassword() {
         
@@ -269,23 +267,34 @@ class LoginViewController: UIViewController {
             NSLayoutConstraint.activate([
                 confirmPasswordTextfield.heightAnchor.constraint(equalToConstant: 50),
                 confirmPasswordTextfield.topAnchor.constraint(equalTo: passwordTextfield.bottomAnchor, constant: 20),
+                confirmPasswordTrailingConstraint
+                
             ])
             
             self.view.layoutIfNeeded()
             self.confirmPasswordTextfield.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor, constant: 20).isActive = true
-            confirmPasswordTrailing = self.confirmPasswordTextfield.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -20)
-            confirmPasswordTrailing?.isActive = true
+            confirmPasswordTrailingConstraint.constant = -20
+            confirmPasswordTrailingConstraint.isActive = true
             
-            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 10) {
+            UIView.animate(
+                withDuration: 1,
+                delay: 0.4,
+                usingSpringWithDamping: 0.5,
+                initialSpringVelocity: 10
+            ) {
                 self.view.layoutIfNeeded()
             }
         } else {
-            self.confirmPasswordTrailing?.constant = -500
-            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 10) {
+            self.confirmPasswordTrailingConstraint.constant = -500
+            UIView.animate(
+                withDuration: 1,
+                delay: 0,
+                usingSpringWithDamping: 0.5,
+                initialSpringVelocity: 10
+            ) {
                 self.view.layoutIfNeeded()
             } completion: { _ in
                 self.confirmPasswordTextfield.removeFromSuperview()
-                self.confirmPasswordTrailing = nil
             }
             
         }
@@ -298,9 +307,6 @@ extension LoginViewController: CAAnimationDelegate {
         animateTextFieldLayer(layer: nil)
         animateConstraints()
         animateButton()
-//        expandContainerAnimation()
-        
-        
     }
 }
 
@@ -308,31 +314,3 @@ extension LoginViewController: CAAnimationDelegate {
     LoginViewController()
 }
 
-
-extension CABasicAnimation {
-    public convenience init(keyPath: AnimationKeyPath) {
-        self.init(keyPath: keyPath.rawValue)
-    }
-    
-    public enum AnimationKeyPath: String {
-        case opacity = "opacity"
-        case position = "position"
-        case transformScale = "transform.scale"
-        case backgroundColor = "backgroundColor"
-    }
-}
-
-extension UIView {
-    func constraint(for attribute: NSLayoutConstraint.Attribute) -> NSLayoutConstraint? {
-        // Buscar primero en las constraints de la propia vista
-        if let directConstraint = self.constraints.first(where: { $0.firstAttribute == attribute && $0.firstItem as? UIView == self }) {
-            return directConstraint
-        }
-        
-        // Si no se encuentra, buscar en las constraints de la superview
-        return self.superview?.constraints.first(where: {
-            ($0.firstAttribute == attribute && $0.firstItem as? UIView == self) ||
-            ($0.secondAttribute == attribute && $0.secondItem as? UIView == self)
-        })
-    }
-}

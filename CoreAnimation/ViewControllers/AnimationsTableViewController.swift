@@ -84,3 +84,7 @@ final class AnimationsTableViewController: UITableViewController {
     }
 
 }
+
+#Preview {
+    AnimationsTableViewController()
+}

@@ -10,8 +10,10 @@
 		260C98412BA0C637007B68E1 /* SpringAnimationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260C98402BA0C637007B68E1 /* SpringAnimationViewController.swift */; };
 		260C98432BA0E86A007B68E1 /* AnimationsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260C98422BA0E86A007B68E1 /* AnimationsTableViewController.swift */; };
 		260C98452BA201F4007B68E1 /* KeyframeAnimationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260C98442BA201F4007B68E1 /* KeyframeAnimationViewController.swift */; };
-		260C98472BA496F6007B68E1 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260C98462BA496F6007B68E1 /* LoginViewController.swift */; };
 		260C984A2BA4BC6B007B68E1 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260C98492BA4BC6B007B68E1 /* CustomTextField.swift */; };
+		2663C2142C04FE2F005F8D65 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2663C2132C04FE2F005F8D65 /* UIView+Extension.swift */; };
+		2663C2162C04FE55005F8D65 /* CABasicAnimation+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2663C2152C04FE55005F8D65 /* CABasicAnimation+Extension.swift */; };
+		2663C2182C05258C005F8D65 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2663C2172C05258C005F8D65 /* LoginViewController.swift */; };
 		26F030CF2B90D86600785452 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F030CE2B90D86600785452 /* AppDelegate.swift */; };
 		26F030D12B90D86600785452 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F030D02B90D86600785452 /* SceneDelegate.swift */; };
 		26F030D32B90D86600785452 /* BasicAnimationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F030D22B90D86600785452 /* BasicAnimationViewController.swift */; };
@@ -23,8 +25,11 @@
 		260C98402BA0C637007B68E1 /* SpringAnimationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpringAnimationViewController.swift; sourceTree = "<group>"; };
 		260C98422BA0E86A007B68E1 /* AnimationsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationsTableViewController.swift; sourceTree = "<group>"; };
 		260C98442BA201F4007B68E1 /* KeyframeAnimationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyframeAnimationViewController.swift; sourceTree = "<group>"; };
-		260C98462BA496F6007B68E1 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		260C98492BA4BC6B007B68E1 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		2663C2122C04ECC4005F8D65 /* readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
+		2663C2132C04FE2F005F8D65 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		2663C2152C04FE55005F8D65 /* CABasicAnimation+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CABasicAnimation+Extension.swift"; sourceTree = "<group>"; };
+		2663C2172C05258C005F8D65 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		26F030CB2B90D86600785452 /* CoreAnimation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoreAnimation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		26F030CE2B90D86600785452 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		26F030D02B90D86600785452 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -48,11 +53,11 @@
 		260C983F2BA0C616007B68E1 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				260C98422BA0E86A007B68E1 /* AnimationsTableViewController.swift */,
 				26F030D22B90D86600785452 /* BasicAnimationViewController.swift */,
 				260C98402BA0C637007B68E1 /* SpringAnimationViewController.swift */,
 				260C98442BA201F4007B68E1 /* KeyframeAnimationViewController.swift */,
-				260C98422BA0E86A007B68E1 /* AnimationsTableViewController.swift */,
-				260C98462BA496F6007B68E1 /* LoginViewController.swift */,
+				2663C2172C05258C005F8D65 /* LoginViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -61,6 +66,8 @@
 			isa = PBXGroup;
 			children = (
 				260C98492BA4BC6B007B68E1 /* CustomTextField.swift */,
+				2663C2132C04FE2F005F8D65 /* UIView+Extension.swift */,
+				2663C2152C04FE55005F8D65 /* CABasicAnimation+Extension.swift */,
 			);
 			path = Utitlities;
 			sourceTree = "<group>";
@@ -68,6 +75,7 @@
 		26F030C22B90D86600785452 = {
 			isa = PBXGroup;
 			children = (
+				2663C2122C04ECC4005F8D65 /* readme.md */,
 				26F030CD2B90D86600785452 /* CoreAnimation */,
 				26F030CC2B90D86600785452 /* Products */,
 			);
@@ -165,13 +173,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				260C98472BA496F6007B68E1 /* LoginViewController.swift in Sources */,
 				260C98412BA0C637007B68E1 /* SpringAnimationViewController.swift in Sources */,
 				26F030D32B90D86600785452 /* BasicAnimationViewController.swift in Sources */,
+				2663C2142C04FE2F005F8D65 /* UIView+Extension.swift in Sources */,
 				260C98432BA0E86A007B68E1 /* AnimationsTableViewController.swift in Sources */,
 				260C984A2BA4BC6B007B68E1 /* CustomTextField.swift in Sources */,
+				2663C2162C04FE55005F8D65 /* CABasicAnimation+Extension.swift in Sources */,
 				26F030CF2B90D86600785452 /* AppDelegate.swift in Sources */,
 				26F030D12B90D86600785452 /* SceneDelegate.swift in Sources */,
+				2663C2182C05258C005F8D65 /* LoginViewController.swift in Sources */,
 				260C98452BA201F4007B68E1 /* KeyframeAnimationViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
