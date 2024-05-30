@@ -152,7 +152,7 @@ class LoginViewController: UIViewController {
             
             passwordTextfield.topAnchor.constraint(equalTo: userTextField.bottomAnchor, constant: 20),
             passwordTextfield.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            passwordTextfield.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
+            passwordTextfield.widthAnchor.constraint(lessThanOrEqualToConstant: 50),
             passwordTextfield.heightAnchor.constraint(equalToConstant: 50),
             
             signUpButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -20),
@@ -177,7 +177,6 @@ class LoginViewController: UIViewController {
     }
     
     private func animateTextFieldLayer(layer: CALayer?) {
-        
         let animationGroup = CAAnimationGroup()
         animationGroup.duration = 2.0
         
@@ -196,8 +195,7 @@ class LoginViewController: UIViewController {
         opacityAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
         opacityAnimation.fillMode = .forwards
         opacityAnimation.isRemovedOnCompletion = false
-        
-        
+
         animationGroup.animations = [opacityAnimation]
         animationGroup.fillMode = .forwards
         animationGroup.isRemovedOnCompletion = false
@@ -206,17 +204,17 @@ class LoginViewController: UIViewController {
     
     }
     
-    private func animateConstraints() {
-        UIView.animate(withDuration: 1.0, delay: 1, animations: { [weak self] in
-            guard let self else { return }
-            [userTextField, passwordTextfield].forEach {
-                $0.trailingAnchor.constraint(
-                    equalTo: self.containerView.trailingAnchor,
-                    constant: -20
-                ).isActive = true
-            }
-            self.view.layoutIfNeeded()
-        })
+    private func animateTrailingConstraintsOnTextFields() {
+        [userTextField, passwordTextfield].forEach {
+            $0.trailingAnchor.constraint(
+                equalTo: self.containerView.trailingAnchor,
+                constant: -20
+            ).isActive = true
+        }
+        
+        UIView.animate(withDuration: 1.0, delay: 1) { [weak self] in
+            self?.view.layoutIfNeeded()
+        }
     }
     
     private func animateButton() {
@@ -248,20 +246,21 @@ class LoginViewController: UIViewController {
         
         let collapsed = value == Constants.colapsedHeight
         let delay: TimeInterval = collapsed ? 1 : 0
-        
-        UIView.animate(withDuration: 1, delay: delay, usingSpringWithDamping: 0.4, initialSpringVelocity: 10, options: .curveEaseInOut, animations: {
-            
-            self.containerHeightConstraint.constant = value
-            self.view.layoutIfNeeded()
-        }, completion: { (completed) in
-            
-        })
+        self.containerHeightConstraint.constant = value
+        UIView.animate(
+            withDuration: 1,
+            delay: delay,
+            usingSpringWithDamping: 0.4,
+            initialSpringVelocity: 10,
+            options: .curveEaseInOut
+        ) { [weak self] in
+            self?.view.layoutIfNeeded()
+        }
         
     }
     
     
     private func animateConfirmPassword() {
-        
         if confirmPasswordTextfield.superview == nil {
             containerView.addSubview(confirmPasswordTextfield)
             NSLayoutConstraint.activate([
@@ -305,7 +304,7 @@ class LoginViewController: UIViewController {
 extension LoginViewController: CAAnimationDelegate {
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         animateTextFieldLayer(layer: nil)
-        animateConstraints()
+        animateTrailingConstraintsOnTextFields()
         animateButton()
     }
 }
